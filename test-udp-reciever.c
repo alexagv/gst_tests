@@ -1,5 +1,5 @@
 //TEST UDP RECIEVER, BASED ON HELLOWORLD EXAMPLE
-//TO COMPILE: gcc -Wall test-udp-sender.c -o test-udp-sender $(pkg-config --cflags --libs gstreamer-1.0)
+//TO COMPILE: gcc -Wall test-udp-reciever.c -o test-udp-reciever $(pkg-config --cflags --libs gstreamer-1.0)
 //TO HOST SERVER: gst-launch-1.0 videotestsrc ! x264enc ! rtph264pay config-interval=1 pt=96 ! udpsink host=127.0.0.1 port=5004
 #include <gst/gst.h>
 #include <glib.h>
@@ -93,7 +93,7 @@ main (int   argc,
   /* Out of the main loop, clean up nicely */
   g_print ("Returned, stopping playback\n");
   gst_element_set_state (pipeline, GST_STATE_NULL);
-  
+
   g_print ("Deleting pipeline\n");
   gst_object_unref (GST_OBJECT (pipeline));
   g_source_remove (bus_watch_id);
