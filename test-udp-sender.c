@@ -1,5 +1,6 @@
 //TEST UDP SENDER, BASED ON HELLOWORLD EXAMPLE
 //TO COMPILE: gcc -Wall test-udp-sender.c -o test-udp-sender $(pkg-config --cflags --libs gstreamer-1.0)
+//TO PLAY STREAM: gst-launch-1.0 udpsrc port=5004 caps='application/x-rtp, media=(string)video, clock-rate=(int)90000, payload=(int)96, encoding-name=(string)H264' ! rtph264depay ! queue ! avdec_h264 ! videoconvert ! autovideosink
 #include <gst/gst.h>
 #include <glib.h>
 
