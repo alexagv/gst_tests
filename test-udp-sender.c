@@ -64,7 +64,7 @@ main (int   argc,
   }
 
   /* we set the properties of the pipeline elements */
-  g_object_set (G_OBJECT (pay), "name", "pay0", "pt", 96, NULL);
+  g_object_set (G_OBJECT (pay), "name", "pay0", "pt", 96, "config-interval", -1, NULL);
   g_object_set (G_OBJECT (sink), "host" , "127.0.0.1", "port", 5004, NULL);
 
   /* we add a message handler */
