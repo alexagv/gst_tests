@@ -83,7 +83,6 @@ main (int   argc,
   GMainLoop *loop;
   GstElement *pipeline, *source, *rtpbin, *depay, *queue, *decoder, *convert, *sink;
   GstBus *bus;
-  GstCaps    *caps;
   guint bus_watch_id;
 
   /* Initialisation */
