@@ -56,7 +56,7 @@ main (int   argc,
 {
   GMainLoop *loop;
 
-  GstElement *pipeline, *source, *encoder, *queue, *pay, *bin, *sink;
+  GstElement *pipeline, *source, *encoder, *queue, *pay, *rtpbin, *sink;
   GstBus *bus;
   guint bus_watch_id;
 
@@ -77,23 +77,23 @@ main (int   argc,
   encoder = gst_element_factory_make ("x264enc", "h264-encoder");
   queue = gst_element_factory_make ("queue", "queue");
   pay = gst_element_factory_make ("rtph264pay", "rtp-payloader");
-  bin = gst_element_factory_make ("rtpbin", "rtp-bin");
+  rtpbin = gst_element_factory_make ("rtpbin", "rtp-bin");
   sink = gst_element_factory_make ("udpsink", "udp-sink");
 
-  if (!pipeline || !source || !encoder || !queue || !pay || !bin || !sink) {
+  if (!pipeline || !source || !encoder || !queue || !pay || !rtpbin || !sink) {
     g_printerr ("One element could not be created. Exiting.\n");
     return -1;
   }
 
   /* we add all elements into the pipeline */
-  gst_bin_add_many (GST_BIN (pipeline), source, encoder, queue, pay, bin, sink, NULL);
+  gst_bin_add_many (GST_BIN (pipeline), source, encoder, queue, pay, rtpbin, sink, NULL);
 
   /* Connect FEC encoder to rtpbin */
   gint64 fec_perc = g_ascii_strtoll (argv[1] , NULL , 0) ; /* Setting fec percentage */
-  g_signal_connect (bin, "request-fec-encoder", G_CALLBACK (make_fec_encoder), &fec_perc);
+  g_signal_connect (rtpbin, "request-fec-encoder", G_CALLBACK (make_fec_encoder), &fec_perc);
 
   /* we link the elements together */
-  gst_element_link_many (source, encoder, queue, pay, bin, sink, NULL);
+  gst_element_link_many (source, encoder, queue, pay, rtpbin, sink, NULL);
 
   /* we set the properties of the pipeline elements */
   g_object_set (G_OBJECT (pay), "name", "pay0", "pt", 96, NULL);
