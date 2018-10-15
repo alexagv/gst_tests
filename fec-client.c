@@ -124,7 +124,7 @@ main (int   argc,
   gst_element_link_many (source, rtpbin, depay, queue, decoder, convert, sink, NULL);
 
   /* Set the pipeline to "playing" state*/
-  g_print ("Now streaming to localhost at port 5004\n");
+  g_print ("Now playing incoming stream from localhost on port 5004\n");
   gst_element_set_state (pipeline, GST_STATE_PLAYING);
 
   /* Iterate */
