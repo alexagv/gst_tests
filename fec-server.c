@@ -88,8 +88,10 @@ main (int   argc,
   /* we add all elements into the pipeline */
   gst_bin_add_many (GST_BIN (pipeline), source, encoder, queue, pay, rtpbin, sink, NULL);
 
+  /* Set FEC percentage */
+  gint64 fec_perc = g_ascii_strtoll (argv[1] , NULL , 0) ; 
+
   /* Connect FEC encoder to rtpbin */
-  gint64 fec_perc = g_ascii_strtoll (argv[1] , NULL , 0) ; /* Setting fec percentage */
   g_signal_connect (rtpbin, "request-fec-encoder", G_CALLBACK (make_fec_encoder), &fec_perc);
 
   /* we link the elements together */
